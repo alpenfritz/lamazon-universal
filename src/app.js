@@ -1,29 +1,33 @@
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import logger from 'redux-logger';
+import { postBook, deleteBook, updateBook } from './actions/booksActions';
+import { addToCart } from './actions/cartActions';
+import rootReducer from './reducers/index';
 
-const postBook = () => ({
-  type: 'POST_BOOK',
-  payload: {
-    id: 1,
-    title: 'JavaScript Awesome',
-    price: 10,
-  },
-});
+const loggerMiddleware = applyMiddleware(logger);
 
-const reducer = (state = {}, action) => {
-  switch (action.type) {
-    case 'POST_BOOK': {
-      const newState = { ...action.payload };
-      return newState;
-    }
-    default:
-      return state;
-  }
-};
-
-const store = createStore(reducer);
+const store = createStore(rootReducer, loggerMiddleware);
 
 store.subscribe(() => {
   console.log(store.getState());
 });
 
-store.dispatch(postBook());
+store.dispatch(postBook([
+  {
+    id: 1,
+    title: 'First Book',
+    price: 10,
+  },
+  {
+    id: 2,
+    title: 'Second Book',
+    price: 20,
+  },
+]));
+store.dispatch(deleteBook({ id: 1 }));
+store.dispatch(updateBook({
+  id: 2,
+  title: 'Updated Title',
+}));
+
+store.dispatch(addToCart([{ id: 2 }]));
