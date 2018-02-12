@@ -5,7 +5,9 @@
   "author": "alpenfritz <mymailismissing@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "eslint": "eslint ."
+    "eslint": "eslint .",
+    "start": "node server.js",
+    "webpack": "webpack"
   },
   "dependencies": {
     "babel-core": "^6.26.0",
