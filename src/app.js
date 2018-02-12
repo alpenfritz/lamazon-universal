@@ -1,16 +1,25 @@
+// REACT
+import React from 'react';
+import { render } from 'react-dom';
+import BooksList from './components/pages/booksList';
+
+// REDUX
 import { applyMiddleware, createStore } from 'redux';
 import logger from 'redux-logger';
 import { postBook, deleteBook, updateBook } from './actions/booksActions';
 import { addToCart } from './actions/cartActions';
 import rootReducer from './reducers/index';
 
+// REDUX
 const loggerMiddleware = applyMiddleware(logger);
-
 const store = createStore(rootReducer, loggerMiddleware);
 
-store.subscribe(() => {
-  console.log(store.getState());
-});
+// REACT
+render(<BooksList />, document.getElementById('app'));
+
+// store.subscribe(() => {
+//   console.log(store.getState());
+// });
 
 store.dispatch(postBook([
   {
