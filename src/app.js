@@ -2,7 +2,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import BooksList from './components/pages/booksList';
+import BooksList from './components/booksList';
 
 // REDUX
 import { applyMiddleware, createStore } from 'redux';
