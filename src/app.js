@@ -1,6 +1,7 @@
 // REACT
 import React from 'react';
 import { render } from 'react-dom';
+import { Provider } from 'react-redux';
 import BooksList from './components/pages/booksList';
 
 // REDUX
@@ -15,7 +16,11 @@ const loggerMiddleware = applyMiddleware(logger);
 const store = createStore(rootReducer, loggerMiddleware);
 
 // REACT
-render(<BooksList />, document.getElementById('app'));
+render(
+  <Provider store={store}>
+    <BooksList />
+  </Provider>, document.getElementById('app'),
+);
 
 // store.subscribe(() => {
 //   console.log(store.getState());
@@ -33,10 +38,10 @@ store.dispatch(postBook([
     price: 20,
   },
 ]));
-store.dispatch(deleteBook({ id: 1 }));
-store.dispatch(updateBook({
-  id: 2,
-  title: 'Updated Title',
-}));
+// store.dispatch(deleteBook({ id: 1 }));
+// store.dispatch(updateBook({
+//   id: 2,
+//   title: 'Updated Title',
+// }));
 
-store.dispatch(addToCart([{ id: 2 }]));
+// store.dispatch(addToCart([{ id: 2 }]));
