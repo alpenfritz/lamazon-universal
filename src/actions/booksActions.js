@@ -1,3 +1,7 @@
+const getBooks = () => ({
+  type: 'GET_BOOKS',
+});
+
 const postBook = books => ({
   type: 'POST_BOOK',
   payload: books,
@@ -14,6 +18,7 @@ const updateBook = book => ({
 });
 
 module.exports = {
+  getBooks,
   postBook,
   deleteBook,
   updateBook,

@@ -26,18 +26,18 @@ render(
 //   console.log(store.getState());
 // });
 
-store.dispatch(postBook([
-  {
-    id: 1,
-    title: 'First Book',
-    price: 10,
-  },
-  {
-    id: 2,
-    title: 'Second Book',
-    price: 20,
-  },
-]));
+// store.dispatch(postBook([
+//   {
+//     id: 1,
+//     title: 'First Book',
+//     price: 10,
+//   },
+//   {
+//     id: 2,
+//     title: 'Second Book',
+//     price: 20,
+//   },
+// ]));
 // store.dispatch(deleteBook({ id: 1 }));
 // store.dispatch(updateBook({
 //   id: 2,

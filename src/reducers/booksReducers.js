@@ -1,5 +1,22 @@
-const booksReducers = (state = { books: [] }, action) => {
+const defaultState = [
+  {
+    id: 1,
+    title: 'First Book',
+    price: 11,
+  },
+  {
+    id: 2,
+    title: 'Second Book',
+    price: 22,
+  },
+];
+
+const booksReducers = (state = { books: defaultState }, action) => {
   switch (action.type) {
+    case 'GET_BOOKS': {
+      const newState = { ...state, books: [...state.books] };
+      return newState;
+    }
     case 'POST_BOOK': {
       const newState = {
         books: [
