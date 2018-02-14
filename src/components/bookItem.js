@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Well, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addToCart } from '../actions/cartActions';
+import { addToCart, updateCart } from '../actions/cartActions';
 
 class BookItem extends React.Component {
   handleCart() {
@@ -12,9 +12,20 @@ class BookItem extends React.Component {
         id: this.props.id,
         title: this.props.title,
         price: this.props.price,
+        quantity: 1,
       },
     ];
-    this.props.addToCart(book);
+    if (this.props.cart.length > 0) {
+      const id = this.props.id;
+      const idxCartItem = this.props.cart.findIndex(item => id === item.id);
+      if (idxCartItem === -1) { // add to cart
+        this.props.addToCart(book);
+      } else { // update quantity
+        this.props.updateCart(id, 1);
+      }
+    } else { // empty cart
+      this.props.addToCart(book);
+    }
   }
   render() {
     return(
@@ -36,6 +47,9 @@ class BookItem extends React.Component {
 
 const mapStateToProps = state => ({ cart: state.cart.cart });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ addToCart }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  addToCart,
+  updateCart,
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookItem);

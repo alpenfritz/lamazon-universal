@@ -3,12 +3,19 @@ const addToCart = book => ({
   payload: book,
 });
 
-const deleteFromCart = book => ({
+const deleteFromCart = id => ({
   type: 'DELETE_FROM_CART',
-  payload: book,
+  id,
+});
+
+const updateCart = (id, unit) => ({
+  type: 'UPDATE_CART',
+  id,
+  unit,
 });
 
 module.exports = {
   addToCart,
   deleteFromCart,
+  updateCart,
 };
