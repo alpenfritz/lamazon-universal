@@ -41262,10 +41262,42 @@ var Cart = function (_React$Component) {
   function Cart() {
     _classCallCheck(this, Cart);
 
-    return _possibleConstructorReturn(this, (Cart.__proto__ || Object.getPrototypeOf(Cart)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Cart.__proto__ || Object.getPrototypeOf(Cart)).call(this));
+
+    _this.state = {
+      showModal: false
+    };
+    return _this;
   }
 
   _createClass(Cart, [{
+    key: 'onDelete',
+    value: function onDelete(id) {
+      this.props.deleteFromCart(id);
+    }
+  }, {
+    key: 'onIncrement',
+    value: function onIncrement(id) {
+      this.props.updateCart(id, 1);
+    }
+  }, {
+    key: 'onDecrement',
+    value: function onDecrement(id, quantity) {
+      if (quantity > 1) {
+        this.props.updateCart(id, -1);
+      }
+    }
+  }, {
+    key: 'open',
+    value: function open() {
+      this.setState({ showModal: true });
+    }
+  }, {
+    key: 'close',
+    value: function close() {
+      this.setState({ showModal: false });
+    }
+  }, {
     key: 'renderEmpty',
     value: function renderEmpty() {
       return _react2.default.createElement('div', null);
@@ -41329,7 +41361,7 @@ var Cart = function (_React$Component) {
                 _react2.default.createElement(
                   _reactBootstrap.Button,
                   {
-                    onClick: _this2.onDecrement.bind(_this2, item.id),
+                    onClick: _this2.onDecrement.bind(_this2, item.id, item.quantity),
                     bsStyle: 'default',
                     bsSize: 'small' },
                   '-'
@@ -41372,24 +41404,68 @@ var Cart = function (_React$Component) {
             'Cart'
           )
         ),
-        shoppingCartList
+        shoppingCartList,
+        _react2.default.createElement(
+          _reactBootstrap.Row,
+          null,
+          _react2.default.createElement(
+            _reactBootstrap.Col,
+            { xs: 12 },
+            _react2.default.createElement(
+              'h6',
+              null,
+              'Total amount: ',
+              this.props.totalAmount
+            ),
+            _react2.default.createElement(
+              _reactBootstrap.Button,
+              { onClick: this.open.bind(this), bsStyle: 'success', bsSize: 'small' },
+              'Send order'
+            )
+          )
+        ),
+        _react2.default.createElement(
+          _reactBootstrap.Modal,
+          { show: this.state.showModal, onHide: this.close.bind(this) },
+          _react2.default.createElement(
+            _reactBootstrap.Modal.Header,
+            { closeButton: true },
+            _react2.default.createElement(
+              _reactBootstrap.Modal.Title,
+              null,
+              'Order sent'
+            )
+          ),
+          _react2.default.createElement(
+            _reactBootstrap.Modal.Body,
+            null,
+            _react2.default.createElement(
+              'h6',
+              null,
+              'Thank you for your purchase'
+            )
+          ),
+          _react2.default.createElement(
+            _reactBootstrap.Modal.Footer,
+            null,
+            _react2.default.createElement(
+              _reactBootstrap.Col,
+              { xs: 6 },
+              _react2.default.createElement(
+                'h6',
+                null,
+                'Total $: ',
+                this.props.totalAmount
+              )
+            ),
+            _react2.default.createElement(
+              _reactBootstrap.Button,
+              { onClick: this.close.bind(this) },
+              'Close'
+            )
+          )
+        )
       );
-    }
-  }, {
-    key: 'onDelete',
-    value: function onDelete(id) {
-      // const cartAfterDelete = this.props.cart;
-      this.props.deleteFromCart(id);
-    }
-  }, {
-    key: 'onIncrement',
-    value: function onIncrement(id) {
-      this.props.updateCart(id, 1);
-    }
-  }, {
-    key: 'onDecrement',
-    value: function onDecrement(id) {
-      this.props.updateCart(id, -1);
     }
   }, {
     key: 'render',
@@ -41405,7 +41481,10 @@ var Cart = function (_React$Component) {
 }(_react2.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
-  return { cart: state.cart.cart };
+  return {
+    cart: state.cart.cart,
+    totalAmount: state.cart.totalAmount
+  };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -41540,6 +41619,24 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
+var calcTotals = function calcTotals(cartArray) {
+  var totalAmount = cartArray.map(function (cartItem) {
+    return cartItem.price * cartItem.quantity;
+  }).reduce(function (a, b) {
+    return a + b;
+  }, 0);
+
+  var totalQty = cartArray.map(function (cartItem) {
+    return cartItem.quantity;
+  }).reduce(function (a, b) {
+    return a + b;
+  }, 0);
+  return {
+    amount: totalAmount.toFixed(2),
+    qty: totalQty
+  };
+};
+
 var cartReducers = function cartReducers() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { cart: [] };
   var action = arguments[1];
@@ -41548,7 +41645,9 @@ var cartReducers = function cartReducers() {
     case 'ADD_TO_CART':
       {
         var newState = _extends({}, state, {
-          cart: [].concat(_toConsumableArray(action.payload))
+          cart: [].concat(_toConsumableArray(action.payload)),
+          totalAmount: calcTotals([].concat(_toConsumableArray(action.payload))).amount,
+          totalQty: calcTotals([].concat(_toConsumableArray(action.payload))).qty
         });
         return newState;
       }
@@ -41558,8 +41657,11 @@ var cartReducers = function cartReducers() {
         var idxDelete = cartBeforeDelete.findIndex(function (book) {
           return book.id === action.id;
         });
+        var payloadAfterDelete = [].concat(_toConsumableArray(cartBeforeDelete.slice(0, idxDelete)), _toConsumableArray(cartBeforeDelete.slice(idxDelete + 1)));
         var cartAfterDelete = {
-          cart: [].concat(_toConsumableArray(cartBeforeDelete.slice(0, idxDelete)), _toConsumableArray(cartBeforeDelete.slice(idxDelete + 1)))
+          cart: payloadAfterDelete,
+          totalAmount: calcTotals(payloadAfterDelete).amount,
+          totalQty: calcTotals(payloadAfterDelete).qty
         };
         return cartAfterDelete;
       }
@@ -41570,7 +41672,11 @@ var cartReducers = function cartReducers() {
           return book.id === action.id;
         });
         currentCart[idxUpdate].quantity += action.unit;
-        var _newState = _extends({}, state, { cart: currentCart });
+        var _newState = _extends({}, state, {
+          cart: currentCart,
+          totalAmount: calcTotals(currentCart).amount,
+          totalQty: calcTotals(currentCart).qty
+        });
         return _newState;
       }
     default:

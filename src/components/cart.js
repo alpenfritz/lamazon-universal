@@ -1,13 +1,43 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, ButtonGroup, Label, Well, Row, Col, Panel } from 'react-bootstrap';
+import { Button, ButtonGroup, Label, Well, Row, Col, Panel, Modal } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import { deleteFromCart, updateCart } from '../actions/cartActions';
 
 class Cart extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      showModal: false,
+    };
+  }
+
+  onDelete(id) {
+    this.props.deleteFromCart(id);
+  }
+
+  onIncrement(id) {
+    this.props.updateCart(id, 1);
+  }
+
+  onDecrement(id, quantity) {
+    if (quantity > 1) {
+      this.props.updateCart(id, -1);
+    }
+  }
+
+  open() {
+    this.setState({ showModal: true });
+  }
+
+  close() {
+    this.setState({ showModal: false });
+  }
+
   renderEmpty() {
     return (<div></div>);
   }
+
   renderShoppingCart() {
     const shoppingCartList = this.props.cart.map(item => {
       return (
@@ -25,7 +55,7 @@ class Cart extends React.Component {
             <Col xs={6} sm={4}>
               <ButtonGroup style={{minWidth: '300px'}}>
                 <Button
-                  onClick={this.onDecrement.bind(this, item.id)}
+                  onClick={this.onDecrement.bind(this, item.id, item.quantity)}
                   bsStyle="default"
                   bsSize="small">-
                 </Button>
@@ -52,21 +82,30 @@ class Cart extends React.Component {
           <Panel.Title componentClass="h3">Cart</Panel.Title>
         </Panel.Heading>
         {shoppingCartList}
+        <Row>
+          <Col xs={12}>
+            <h6>Total amount: {this.props.totalAmount}</h6>
+            <Button onClick={this.open.bind(this)} bsStyle="success" bsSize="small">
+              Send order
+            </Button>
+          </Col>
+        </Row>
+        <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Order sent</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <h6>Thank you for your purchase</h6>
+          </Modal.Body>
+          <Modal.Footer>
+            <Col xs={6}>
+              <h6>Total $: {this.props.totalAmount}</h6>
+            </Col>
+            <Button onClick={this.close.bind(this)}>Close</Button>
+          </Modal.Footer>
+        </Modal>
       </Panel>
     );
-  }
-
-  onDelete(id) {
-    // const cartAfterDelete = this.props.cart;
-    this.props.deleteFromCart(id);
-  }
-
-  onIncrement(id) {
-    this.props.updateCart(id, 1);
-  }
-
-  onDecrement(id) {
-    this.props.updateCart(id, -1);
   }
 
   render() {
@@ -77,7 +116,10 @@ class Cart extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({ cart: state.cart.cart });
+const mapStateToProps = state => ({
+  cart: state.cart.cart,
+  totalAmount: state.cart.totalAmount,
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   deleteFromCart,
