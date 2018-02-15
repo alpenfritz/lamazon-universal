@@ -3,6 +3,8 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import BooksList from './components/booksList';
+import Menu from './components/navbar';
+import Footer from './components/footer';
 
 // REDUX
 import { applyMiddleware, createStore } from 'redux';
@@ -18,7 +20,11 @@ const store = createStore(rootReducer, loggerMiddleware);
 // REACT
 render(
   <Provider store={store}>
-    <BooksList />
+    <div>
+      <Menu />
+      <BooksList />
+      <Footer />
+    </div>
   </Provider>, document.getElementById('app'),
 );
 
