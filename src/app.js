@@ -1,8 +1,14 @@
+// REACT-ROUTER
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
 // REACT
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+
 import BooksList from './components/booksList';
+import BooksForm from './components/booksForm';
+import Cart from './components/cart';
 import Menu from './components/navbar';
 import Footer from './components/footer';
 
@@ -17,37 +23,22 @@ import rootReducer from './reducers/index';
 const loggerMiddleware = applyMiddleware(logger);
 const store = createStore(rootReducer, loggerMiddleware);
 
-// REACT
-render(
+// REACT-ROUTER
+const Routes = (
   <Provider store={store}>
-    <div>
-      <Menu />
-      <BooksList />
-      <Footer />
-    </div>
-  </Provider>, document.getElementById('app'),
+    <BrowserRouter>
+      <div>
+        <Menu />
+        <Switch>
+          <Route exact path="/" component={BooksList} />
+          <Route path="/admin" component={BooksForm} />
+          <Route path="/cart" component={Cart} />
+        </Switch>
+        <Footer />
+      </div>
+    </BrowserRouter>
+  </Provider>
 );
 
-// store.subscribe(() => {
-//   console.log(store.getState());
-// });
-
-// store.dispatch(postBook([
-//   {
-//     id: 1,
-//     title: 'First Book',
-//     price: 10,
-//   },
-//   {
-//     id: 2,
-//     title: 'Second Book',
-//     price: 20,
-//   },
-// ]));
-// store.dispatch(deleteBook({ id: 1 }));
-// store.dispatch(updateBook({
-//   id: 2,
-//   title: 'Updated Title',
-// }));
-
-// store.dispatch(addToCart([{ id: 2 }]));
+// REACT
+render(Routes, document.getElementById('app'));

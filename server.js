@@ -6,7 +6,7 @@ const app = express();
 app.use(express.static('public'));
 
 // main route
-app.get('/', (request, response) => {
+app.get('*', (request, response) => {
   response.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 });
 
