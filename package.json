@@ -4,9 +4,11 @@
   "main": "index.js",
   "author": "alpenfritz <mymailismissing@gmail.com>",
   "license": "MIT",
+  "private": true,
   "scripts": {
+    "start": "node ./bin/www",
+    "nodemon": "nodemon",
     "eslint": "eslint .",
-    "start": "node server.js",
     "webpack": "webpack"
   },
   "dependencies": {
@@ -15,14 +17,21 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
     "express": "^4.16.2",
+    "jade": "~1.11.0",
+    "mongoose": "^5.0.5",
+    "morgan": "~1.9.0",
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "serve-favicon": "~2.4.5"
   },
   "devDependencies": {
     "eslint": "^4.17.0",
@@ -30,6 +39,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.6.1",
+    "nodemon": "^1.14.12",
     "webpack": "^3.10.0"
   }
 }
