@@ -5117,7 +5117,7 @@ var postBook = function postBook(books) {
 var deleteBook = function deleteBook(id) {
   return {
     type: 'DELETE_BOOK',
-    payload: id
+    id: id
   };
 };
 
@@ -41167,8 +41167,22 @@ var BooksForm = function (_React$Component) {
       this.props.postBook(book);
     }
   }, {
+    key: 'onDelete',
+    value: function onDelete() {
+      var bookId = (0, _reactDom.findDOMNode)(this.refs.bookForDelete).value;
+      this.props.deleteBook(bookId);
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var booksList = this.props.books.map(function (book) {
+        return _react2.default.createElement(
+          'option',
+          { key: book.id },
+          book.id
+        );
+      });
+
       return _react2.default.createElement(
         _reactBootstrap.Well,
         null,
@@ -41186,7 +41200,8 @@ var BooksForm = function (_React$Component) {
             _react2.default.createElement(_reactBootstrap.FormControl, {
               type: 'text',
               placeholder: 'Title',
-              ref: 'title' })
+              ref: 'title'
+            })
           ),
           _react2.default.createElement(
             _reactBootstrap.FormGroup,
@@ -41199,7 +41214,8 @@ var BooksForm = function (_React$Component) {
             _react2.default.createElement(_reactBootstrap.FormControl, {
               type: 'text',
               placeholder: 'Price',
-              ref: 'price' })
+              ref: 'price'
+            })
           ),
           _react2.default.createElement(
             _reactBootstrap.Button,
@@ -41209,6 +41225,35 @@ var BooksForm = function (_React$Component) {
             },
             'Save book'
           )
+        ),
+        _react2.default.createElement(
+          _reactBootstrap.Panel,
+          { style: { marginTop: '25px' } },
+          _react2.default.createElement(
+            _reactBootstrap.FormGroup,
+            { controlId: 'formControlsSelect' },
+            _react2.default.createElement(
+              _reactBootstrap.ControlLabel,
+              null,
+              'Select a book id to delete'
+            ),
+            _react2.default.createElement(
+              _reactBootstrap.FormControl,
+              { ref: 'bookForDelete', componentClass: 'select', placeholder: 'select' },
+              _react2.default.createElement(
+                'option',
+                { value: 'select' },
+                'select'
+              ),
+              booksList
+            )
+          ),
+          _react2.default.createElement(
+            _reactBootstrap.Button,
+            {
+              onClick: this.onDelete.bind(this), bsStyle: 'danger' },
+            'Delete Book'
+          )
         )
       );
     }
@@ -41217,11 +41262,20 @@ var BooksForm = function (_React$Component) {
   return BooksForm;
 }(_react2.default.Component);
 
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return (0, _redux.bindActionCreators)({ postBook: _booksActions.postBook }, dispatch);
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    books: state.books.books
+  };
 };
 
-exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(BooksForm);
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return (0, _redux.bindActionCreators)({
+    postBook: _booksActions.postBook,
+    deleteBook: _booksActions.deleteBook
+  }, dispatch);
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(BooksForm);
 
 /***/ }),
 /* 340 */
@@ -41545,6 +41599,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -41578,9 +41634,10 @@ var booksReducers = function booksReducers() {
       }
     case 'DELETE_BOOK':
       {
+        console.log(_typeof(action.id), '<------------------');
         var allBooks = [].concat(_toConsumableArray(state.books));
         var idxDelete = allBooks.findIndex(function (book) {
-          return book.id === action.payload.id;
+          return book.id === +action.id;
         });
         var _newState2 = {
           books: [].concat(_toConsumableArray(allBooks.slice(0, idxDelete)), _toConsumableArray(allBooks.slice(idxDelete + 1)))

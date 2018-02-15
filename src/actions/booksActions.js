@@ -9,7 +9,7 @@ const postBook = books => ({
 
 const deleteBook = id => ({
   type: 'DELETE_BOOK',
-  payload: id,
+  id,
 });
 
 const updateBook = book => ({

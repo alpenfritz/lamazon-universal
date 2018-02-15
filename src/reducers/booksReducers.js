@@ -27,8 +27,9 @@ const booksReducers = (state = { books: defaultState }, action) => {
       return newState;
     }
     case 'DELETE_BOOK': {
+      console.log(typeof action.id, '<------------------');
       const allBooks = [...state.books];
-      const idxDelete = allBooks.findIndex(book => book.id === action.payload.id);
+      const idxDelete = allBooks.findIndex(book => book.id === +action.id);
       const newState = {
         books: [
           ...allBooks.slice(0, idxDelete),
