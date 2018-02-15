@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import BooksList from './components/booksList';
 import BooksForm from './components/booksForm';
 import Cart from './components/cart';
-import Menu from './components/navbar';
+import Menu from './components/menu';
 import Footer from './components/footer';
 
 // REDUX
