@@ -3,7 +3,7 @@ import { Panel, FormControl, FormGroup, ControlLabel, Button, Well } from 'react
 import { connect } from 'react-redux';
 import { findDOMNode } from 'react-dom';
 import { bindActionCreators } from 'redux';
-import { getBooks, postBook, deleteBook } from '../actions/booksActions';
+import { getBooks, postBook, deleteBook, resetForm } from '../actions/booksActions';
 
 class BooksForm extends React.Component {
   componentDidMount() {
@@ -21,6 +21,12 @@ class BooksForm extends React.Component {
   onDelete() {
     let bookId = findDOMNode(this.refs.bookForDelete).value;
     this.props.deleteBook(bookId);
+  }
+
+  resetForm() {
+    this.props.resetForm();
+    findDOMNode(this.refs.title).value = '';
+    findDOMNode(this.refs.price).value = '';
   }
 
   render() {
@@ -48,9 +54,9 @@ class BooksForm extends React.Component {
             />
           </FormGroup>
           <Button
-            onClick={this.handleSubmit.bind(this)}
-            bsStyle="success"
-          >Save book
+            onClick={(!this.props.msg) ? (this.handleSubmit.bind(this)) : (this.resetForm.bind(this))}
+            bsStyle={(!this.props.style) ? ('success') : (this.props.style)}
+          >{(!this.props.msg) ? ('Save book') : (this.props.msg)}
           </Button>
         </Panel>
         <Panel style={{ marginTop: '25px' }}>
@@ -72,12 +78,15 @@ class BooksForm extends React.Component {
 
 const mapStateToProps = state => ({
   books: state.books.books,
+  msg: state.books.msg,
+  style: state.books.style,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getBooks,
   postBook,
   deleteBook,
+  resetForm,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(BooksForm);

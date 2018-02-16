@@ -11,10 +11,21 @@ const booksReducers = (state = { books: defaultState }, action) => {
     }
     case 'POST_BOOK': {
       const newState = {
+        ...state,
         books: [
           ...state.books,
           ...action.payload,
         ],
+        msg: 'Saved! Click to continue',
+        style: 'warning',
+      };
+      return newState;
+    }
+    case 'POST_BOOK_REJECTED': {
+      const newState = {
+        ...state,
+        msg: 'Something went wrong. Please try again!',
+        style: 'danger',
       };
       return newState;
     }
@@ -34,6 +45,14 @@ const booksReducers = (state = { books: defaultState }, action) => {
       const idxUpdate = allBooks.findIndex(book => book._id === action.payload._id);
       allBooks[idxUpdate] = action.payload;
       const newState = { books: allBooks };
+      return newState;
+    }
+    case 'RESET_FORM': {
+      const newState = {
+        ...state,
+        msg: null,
+        style: 'success',
+      };
       return newState;
     }
     default:

@@ -1,8 +1,6 @@
 import axios from 'axios';
 
-// const getBooks = () => ({
-//   type: 'GET_BOOKS',
-// });
+// GET BOOKS
 const getBooks = () => {
   return function(dispatch) {
     axios.get('/api/books')
@@ -15,10 +13,7 @@ const getBooks = () => {
   };
 };
 
-// const postBook = books => ({
-//   type: 'POST_BOOK',
-//   payload: books,
-// });
+// POST BOOK
 const postBook = books => {
   return function(dispatch) {
     axios.post('/api/books', books)
@@ -31,10 +26,7 @@ const postBook = books => {
   };
 };
 
-// const deleteBook = _id => ({
-//   type: 'DELETE_BOOK',
-//   _id,
-// });
+// DELETE BOOK
 const deleteBook = _id => {
   return function(dispatch) {
     axios.delete(`/api/books/${_id}`)
@@ -47,9 +39,15 @@ const deleteBook = _id => {
   };
 };
 
+// UPDATE BOOKS
 const updateBook = book => ({
   type: 'UPDATE_BOOK',
   payload: book,
+});
+
+// RESET FORM
+const resetForm = () => ({
+  type: 'RESET_FORM',
 });
 
 module.exports = {
@@ -57,4 +55,5 @@ module.exports = {
   postBook,
   deleteBook,
   updateBook,
+  resetForm,
 };

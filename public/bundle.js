@@ -6174,9 +6174,7 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// const getBooks = () => ({
-//   type: 'GET_BOOKS',
-// });
+// GET BOOKS
 var getBooks = function getBooks() {
   return function (dispatch) {
     _axios2.default.get('/api/books').then(function (response) {
@@ -6187,10 +6185,7 @@ var getBooks = function getBooks() {
   };
 };
 
-// const postBook = books => ({
-//   type: 'POST_BOOK',
-//   payload: books,
-// });
+// POST BOOK
 var postBook = function postBook(books) {
   return function (dispatch) {
     _axios2.default.post('/api/books', books).then(function (response) {
@@ -6201,10 +6196,7 @@ var postBook = function postBook(books) {
   };
 };
 
-// const deleteBook = _id => ({
-//   type: 'DELETE_BOOK',
-//   _id,
-// });
+// DELETE BOOK
 var deleteBook = function deleteBook(_id) {
   return function (dispatch) {
     _axios2.default.delete('/api/books/' + _id).then(function (response) {
@@ -6215,6 +6207,7 @@ var deleteBook = function deleteBook(_id) {
   };
 };
 
+// UPDATE BOOKS
 var updateBook = function updateBook(book) {
   return {
     type: 'UPDATE_BOOK',
@@ -6222,11 +6215,19 @@ var updateBook = function updateBook(book) {
   };
 };
 
+// RESET FORM
+var resetForm = function resetForm() {
+  return {
+    type: 'RESET_FORM'
+  };
+};
+
 module.exports = {
   getBooks: getBooks,
   postBook: postBook,
   deleteBook: deleteBook,
-  updateBook: updateBook
+  updateBook: updateBook,
+  resetForm: resetForm
 };
 
 /***/ }),
@@ -12367,6 +12368,13 @@ var BooksForm = function (_React$Component) {
       this.props.deleteBook(bookId);
     }
   }, {
+    key: 'resetForm',
+    value: function resetForm() {
+      this.props.resetForm();
+      (0, _reactDom.findDOMNode)(this.refs.title).value = '';
+      (0, _reactDom.findDOMNode)(this.refs.price).value = '';
+    }
+  }, {
     key: 'render',
     value: function render() {
       var booksList = this.props.books.map(function (book) {
@@ -12414,10 +12422,10 @@ var BooksForm = function (_React$Component) {
           _react2.default.createElement(
             _reactBootstrap.Button,
             {
-              onClick: this.handleSubmit.bind(this),
-              bsStyle: 'success'
+              onClick: !this.props.msg ? this.handleSubmit.bind(this) : this.resetForm.bind(this),
+              bsStyle: !this.props.style ? 'success' : this.props.style
             },
-            'Save book'
+            !this.props.msg ? 'Save book' : this.props.msg
           )
         ),
         _react2.default.createElement(
@@ -12458,7 +12466,9 @@ var BooksForm = function (_React$Component) {
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    books: state.books.books
+    books: state.books.books,
+    msg: state.books.msg,
+    style: state.books.style
   };
 };
 
@@ -12466,7 +12476,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return (0, _redux.bindActionCreators)({
     getBooks: _booksActions.getBooks,
     postBook: _booksActions.postBook,
-    deleteBook: _booksActions.deleteBook
+    deleteBook: _booksActions.deleteBook,
+    resetForm: _booksActions.resetForm
   }, dispatch);
 };
 
@@ -47709,10 +47720,20 @@ var booksReducers = function booksReducers() {
       }
     case 'POST_BOOK':
       {
-        var _newState = {
-          books: [].concat(_toConsumableArray(state.books), _toConsumableArray(action.payload))
-        };
+        var _newState = _extends({}, state, {
+          books: [].concat(_toConsumableArray(state.books), _toConsumableArray(action.payload)),
+          msg: 'Saved! Click to continue',
+          style: 'warning'
+        });
         return _newState;
+      }
+    case 'POST_BOOK_REJECTED':
+      {
+        var _newState2 = _extends({}, state, {
+          msg: 'Something went wrong. Please try again!',
+          style: 'danger'
+        });
+        return _newState2;
       }
     case 'DELETE_BOOK':
       {
@@ -47720,10 +47741,10 @@ var booksReducers = function booksReducers() {
         var idxDelete = allBooks.findIndex(function (book) {
           return book._id === action._id;
         });
-        var _newState2 = {
+        var _newState3 = {
           books: [].concat(_toConsumableArray(allBooks.slice(0, idxDelete)), _toConsumableArray(allBooks.slice(idxDelete + 1)))
         };
-        return _newState2;
+        return _newState3;
       }
     case 'UPDATE_BOOK':
       {
@@ -47732,8 +47753,16 @@ var booksReducers = function booksReducers() {
           return book._id === action.payload._id;
         });
         _allBooks[idxUpdate] = action.payload;
-        var _newState3 = { books: _allBooks };
-        return _newState3;
+        var _newState4 = { books: _allBooks };
+        return _newState4;
+      }
+    case 'RESET_FORM':
+      {
+        var _newState5 = _extends({}, state, {
+          msg: null,
+          style: 'success'
+        });
+        return _newState5;
       }
     default:
       return state;
