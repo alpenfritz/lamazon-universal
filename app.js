@@ -25,16 +25,67 @@ const Books = require('./db/books');
 
 mongoose.connect('mongodb://localhost:27017/bookshop');
 
+// API-GET
+app.get('/api/books', (request, response) => {
+  // mongoose
+  Books.find((err, books) => {
+    if (err) {
+      throw err;
+    }
+    return response.json(books);
+  });
+});
+
+// API-POST
 app.post('/api/books', (request, response) => {
   const book = request.body;
 
+  // mongoose
   Books.create(book, (err, books) => {
     if (err) {
       throw err;
     }
-    response.json(books);
+    return response.json(books);
   });
 });
+
+// API-DELETE
+app.delete('/api/books/:_id', (request, response) => {
+  const query = { _id: request.params._id };
+
+  // mongoose
+  Books.remove(query, (err, books) => {
+    if (err) {
+      throw err;
+    }
+    return response.json(books);
+  });
+});
+
+// API-UPDATE (PUT)
+app.put('/api/books/:_id', (request, response) => {
+  const book = request.body;
+  const query = { _id: request.params._id };
+  // overwrite, otherwise $set will create a new entry
+  const update = {
+    $set: {
+      title: book.title,
+      image: book.image,
+      price: book.price,
+    },
+  };
+  // set new to true, so that we get the updated document
+  const options = { new: true };
+
+  // mongoose
+  Books.findOneAndUpdate(query, update, options, (err, books) => {
+    if (err) {
+      throw err;
+    }
+    return response.json(books);
+  });
+});
+
 
 // main route
 app.get('*', (request, response) => {
@@ -42,21 +93,21 @@ app.get('*', (request, response) => {
 });
 
 // catch 404 and forward to error handler
-app.use((req, res, next) => {
+app.use((request, response, next) => {
   const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use((err, req, res, next) => {
+app.use((err, request, response, next) => {
   // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  response.locals.message = err.message;
+  response.locals.error = request.app.get('env') === 'development' ? err : {};
 
   // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  response.status(err.status || 500);
+  response.render('error');
 });
 
 module.exports = app;
