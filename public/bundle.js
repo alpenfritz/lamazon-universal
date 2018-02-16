@@ -3650,17 +3650,17 @@ var addToCart = function addToCart(book) {
   };
 };
 
-var deleteFromCart = function deleteFromCart(id) {
+var deleteFromCart = function deleteFromCart(_id) {
   return {
     type: 'DELETE_FROM_CART',
-    id: id
+    _id: _id
   };
 };
 
-var updateCart = function updateCart(id, unit) {
+var updateCart = function updateCart(_id, unit) {
   return {
     type: 'UPDATE_CART',
-    id: id,
+    _id: _id,
     unit: unit
   };
 };
@@ -5830,10 +5830,10 @@ var postBook = function postBook(books) {
   };
 };
 
-var deleteBook = function deleteBook(id) {
+var deleteBook = function deleteBook(_id) {
   return {
     type: 'DELETE_BOOK',
-    id: id
+    _id: _id
   };
 };
 
@@ -11614,8 +11614,8 @@ var BooksForm = function (_React$Component) {
       var booksList = this.props.books.map(function (book) {
         return _react2.default.createElement(
           'option',
-          { key: book.id },
-          book.id
+          { key: book._id },
+          book._id
         );
       });
 
@@ -11762,19 +11762,19 @@ var Cart = function (_React$Component) {
 
   _createClass(Cart, [{
     key: 'onDelete',
-    value: function onDelete(id) {
-      this.props.deleteFromCart(id);
+    value: function onDelete(_id) {
+      this.props.deleteFromCart(_id);
     }
   }, {
     key: 'onIncrement',
-    value: function onIncrement(id) {
-      this.props.updateCart(id, 1);
+    value: function onIncrement(_id) {
+      this.props.updateCart(_id, 1);
     }
   }, {
     key: 'onDecrement',
-    value: function onDecrement(id, quantity) {
+    value: function onDecrement(_id, quantity) {
       if (quantity > 1) {
-        this.props.updateCart(id, -1);
+        this.props.updateCart(_id, -1);
       }
     }
   }, {
@@ -11800,7 +11800,7 @@ var Cart = function (_React$Component) {
       var shoppingCartList = this.props.cart.map(function (item) {
         return _react2.default.createElement(
           _reactBootstrap.Panel,
-          { key: item.id },
+          { key: item._id },
           _react2.default.createElement(
             _reactBootstrap.Row,
             null,
@@ -11851,7 +11851,7 @@ var Cart = function (_React$Component) {
                 _react2.default.createElement(
                   _reactBootstrap.Button,
                   {
-                    onClick: _this2.onDecrement.bind(_this2, item.id, item.quantity),
+                    onClick: _this2.onDecrement.bind(_this2, item._id, item.quantity),
                     bsStyle: 'default',
                     bsSize: 'small' },
                   '-'
@@ -11859,7 +11859,7 @@ var Cart = function (_React$Component) {
                 _react2.default.createElement(
                   _reactBootstrap.Button,
                   {
-                    onClick: _this2.onIncrement.bind(_this2, item.id),
+                    onClick: _this2.onIncrement.bind(_this2, item._id),
                     bsStyle: 'default',
                     bsSize: 'small' },
                   '+'
@@ -11872,7 +11872,7 @@ var Cart = function (_React$Component) {
                 _react2.default.createElement(
                   _reactBootstrap.Button,
                   {
-                    onClick: _this2.onDelete.bind(_this2, item.id),
+                    onClick: _this2.onDelete.bind(_this2, item._id),
                     bsStyle: 'danger',
                     bsSize: 'small' },
                   'Delete'
@@ -34160,9 +34160,9 @@ var BooksList = function (_React$Component) {
       var list = this.props.books.map(function (book) {
         return _react2.default.createElement(
           _reactBootstrap.Col,
-          { xs: 12, sm: 6, md: 4, key: book.id },
+          { xs: 12, sm: 6, md: 4, key: book._id },
           _react2.default.createElement(_bookItem2.default, {
-            id: book.id,
+            _id: book._id,
             title: book.title,
             price: book.price
           })
@@ -45710,22 +45710,22 @@ var BookItem = function (_React$Component) {
     key: 'handleCart',
     value: function handleCart() {
       var book = [].concat(_toConsumableArray(this.props.cart), [{
-        id: this.props.id,
+        _id: this.props._id,
         title: this.props.title,
         price: this.props.price,
         quantity: 1
       }]);
       if (this.props.cart.length > 0) {
-        var id = this.props.id;
+        var _id = this.props._id;
         var idxCartItem = this.props.cart.findIndex(function (item) {
-          return id === item.id;
+          return _id === item._id;
         });
         if (idxCartItem === -1) {
           // add to cart
           this.props.addToCart(book);
         } else {
           // update quantity
-          this.props.updateCart(id, 1);
+          this.props.updateCart(_id, 1);
         }
       } else {
         // empty cart
@@ -46011,18 +46011,16 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 var defaultState = [{
-  id: 1,
+  _id: 1,
   title: 'First Book',
   price: 11
 }, {
-  id: 2,
+  _id: 2,
   title: 'Second Book',
   price: 22
 }];
@@ -46046,10 +46044,9 @@ var booksReducers = function booksReducers() {
       }
     case 'DELETE_BOOK':
       {
-        console.log(_typeof(action.id), '<------------------');
         var allBooks = [].concat(_toConsumableArray(state.books));
         var idxDelete = allBooks.findIndex(function (book) {
-          return book.id === +action.id;
+          return book._id === +action._id;
         });
         var _newState2 = {
           books: [].concat(_toConsumableArray(allBooks.slice(0, idxDelete)), _toConsumableArray(allBooks.slice(idxDelete + 1)))
@@ -46060,7 +46057,7 @@ var booksReducers = function booksReducers() {
       {
         var _allBooks = [].concat(_toConsumableArray(state.books));
         var idxUpdate = _allBooks.findIndex(function (book) {
-          return book.id === action.payload.id;
+          return book._id === action.payload._id;
         });
         _allBooks[idxUpdate] = action.payload;
         var _newState3 = { books: _allBooks };
@@ -46124,7 +46121,7 @@ var cartReducers = function cartReducers() {
       {
         var cartBeforeDelete = [].concat(_toConsumableArray(state.cart));
         var idxDelete = cartBeforeDelete.findIndex(function (book) {
-          return book.id === action.id;
+          return book._id === action._id;
         });
         var payloadAfterDelete = [].concat(_toConsumableArray(cartBeforeDelete.slice(0, idxDelete)), _toConsumableArray(cartBeforeDelete.slice(idxDelete + 1)));
         var cartAfterDelete = {
@@ -46138,7 +46135,7 @@ var cartReducers = function cartReducers() {
       {
         var currentCart = [].concat(_toConsumableArray(state.cart));
         var idxUpdate = currentCart.findIndex(function (book) {
-          return book.id === action.id;
+          return book._id === action._id;
         });
         currentCart[idxUpdate].quantity += action.unit;
         var _newState = _extends({}, state, {
