@@ -4,10 +4,12 @@ import { connect } from 'react-redux';
 import { findDOMNode } from 'react-dom';
 import { bindActionCreators } from 'redux';
 import { getBooks, postBook, deleteBook, resetForm } from '../actions/booksActions';
+import { getCart } from '../actions/cartActions';
 
 class BooksForm extends React.Component {
   componentDidMount() {
     this.props.getBooks();
+    this.props.getCart();
   }
 
   handleSubmit() {
@@ -87,6 +89,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   postBook,
   deleteBook,
   resetForm,
+  getCart,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(BooksForm);
