@@ -39,7 +39,7 @@ const deleteBook = _id => {
   return function(dispatch) {
     axios.delete(`/api/books/${_id}`)
       .then(function (response) {
-        dispatch({ type: 'DELETE_BOOK', payload: _id })
+        dispatch({ type: 'DELETE_BOOK', _id })
       })
       .catch(function (err) {
         dispatch({ type: 'DELETE_BOOK_REJECTED', payload: err })

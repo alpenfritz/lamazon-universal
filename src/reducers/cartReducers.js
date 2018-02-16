@@ -14,29 +14,9 @@ const calcTotals = (cartArray) => {
 
 const cartReducers = (state = { cart: [] }, action) => {
   switch (action.type) {
-    case 'ADD_TO_CART': {
-      const newState = {
-        ...state,
-        cart: [...action.payload],
-        totalAmount: calcTotals([...action.payload]).amount,
-        totalQty: calcTotals([...action.payload]).qty,
-      };
-      return newState;
-    }
-    case 'DELETE_FROM_CART': {
-      const cartBeforeDelete = [...state.cart];
-      const idxDelete = cartBeforeDelete.findIndex(book => book._id === action._id);
-      const payloadAfterDelete = [
-        ...cartBeforeDelete.slice(0, idxDelete),
-        ...cartBeforeDelete.slice(idxDelete + 1),
-      ];
-      const cartAfterDelete = {
-        cart: payloadAfterDelete,
-        totalAmount: calcTotals(payloadAfterDelete).amount,
-        totalQty: calcTotals(payloadAfterDelete).qty,
-      };
-      return cartAfterDelete;
-    }
+    case 'GET_CART':
+    case 'ADD_TO_CART':
+    case 'DELETE_FROM_CART':
     case 'UPDATE_CART': {
       const newState = {
         ...state,

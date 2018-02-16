@@ -3,7 +3,10 @@ const defaultState = [];
 const booksReducers = (state = { books: defaultState }, action) => {
   switch (action.type) {
     case 'GET_BOOKS': {
-      const newState = { ...state, books: [...action.payload] };
+      const newState = {
+        ...state,
+        books: [...action.payload],
+      };
       return newState;
     }
     case 'POST_BOOK': {
@@ -17,7 +20,7 @@ const booksReducers = (state = { books: defaultState }, action) => {
     }
     case 'DELETE_BOOK': {
       const allBooks = [...state.books];
-      const idxDelete = allBooks.findIndex(book => book._id === action.payload);
+      const idxDelete = allBooks.findIndex(book => book._id === action._id);
       const newState = {
         books: [
           ...allBooks.slice(0, idxDelete),

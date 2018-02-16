@@ -3,6 +3,10 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+// For persistent session
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+
 const app = express();
 
 // view engine setup
@@ -16,8 +20,38 @@ app.use(cookieParser());
 
 // API
 const Books = require('./db/books'); // DB Schema
-
 mongoose.connect('mongodb://localhost:27017/bookshop');
+// optional:
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'Connection Error to MongoDB'));
+
+// SESSION MIDDLEWARE (persistent ShoppingCart)
+app.use(session({
+  secret: 'maloKA',
+  saveUninitialized: false, // don't create session until something stored
+  resave: false, // don't save session if unmodified
+  cookie: { maxAge: 2 * 24 * 60 * 60 * 1000 }, // 2 days in milliseconds
+  store: new MongoStore({ mongooseConnection: db, ttl: 2 * 24 * 60 * 60 }),
+}));
+
+// GET SESSION (persistent ShoppingCart)
+app.get('/cart', (request, response) => {
+  if (request.session.cart) {
+    return response.json(request.session.cart);
+  }
+});
+
+// POST SESSION (persistent ShoppingCart)
+app.post('/cart', (request, response) => {
+  const cart = request.body;
+  request.session.cart = cart;
+  request.session.save((err) => {
+    if (err) {
+      throw err;
+    }
+    return response.json(request.session.cart);
+  });
+});
 
 // API-GET
 app.get('/books', (request, response) => {
