@@ -12454,69 +12454,77 @@ var BooksForm = function (_React$Component) {
           _reactBootstrap.Panel,
           null,
           _react2.default.createElement(
-            _reactBootstrap.FormGroup,
-            { controlId: 'title' },
+            _reactBootstrap.Panel.Body,
+            null,
             _react2.default.createElement(
-              _reactBootstrap.ControlLabel,
-              null,
-              'Title'
+              _reactBootstrap.FormGroup,
+              { controlId: 'title' },
+              _react2.default.createElement(
+                _reactBootstrap.ControlLabel,
+                null,
+                'Title'
+              ),
+              _react2.default.createElement(_reactBootstrap.FormControl, {
+                type: 'text',
+                placeholder: 'Title',
+                ref: 'title'
+              })
             ),
-            _react2.default.createElement(_reactBootstrap.FormControl, {
-              type: 'text',
-              placeholder: 'Title',
-              ref: 'title'
-            })
-          ),
-          _react2.default.createElement(
-            _reactBootstrap.FormGroup,
-            { controlId: 'price' },
             _react2.default.createElement(
-              _reactBootstrap.ControlLabel,
-              null,
-              'Price'
+              _reactBootstrap.FormGroup,
+              { controlId: 'price' },
+              _react2.default.createElement(
+                _reactBootstrap.ControlLabel,
+                null,
+                'Price'
+              ),
+              _react2.default.createElement(_reactBootstrap.FormControl, {
+                type: 'text',
+                placeholder: 'Price',
+                ref: 'price'
+              })
             ),
-            _react2.default.createElement(_reactBootstrap.FormControl, {
-              type: 'text',
-              placeholder: 'Price',
-              ref: 'price'
-            })
-          ),
-          _react2.default.createElement(
-            _reactBootstrap.Button,
-            {
-              onClick: !this.props.msg ? this.handleSubmit.bind(this) : this.resetForm.bind(this),
-              bsStyle: !this.props.style ? 'success' : this.props.style
-            },
-            !this.props.msg ? 'Save book' : this.props.msg
+            _react2.default.createElement(
+              _reactBootstrap.Button,
+              {
+                onClick: !this.props.msg ? this.handleSubmit.bind(this) : this.resetForm.bind(this),
+                bsStyle: !this.props.style ? 'success' : this.props.style
+              },
+              !this.props.msg ? 'Save book' : this.props.msg
+            )
           )
         ),
         _react2.default.createElement(
           _reactBootstrap.Panel,
           { style: { marginTop: '25px' } },
           _react2.default.createElement(
-            _reactBootstrap.FormGroup,
-            { controlId: 'formControlsSelect' },
+            _reactBootstrap.Panel.Body,
+            null,
             _react2.default.createElement(
-              _reactBootstrap.ControlLabel,
-              null,
-              'Select a book id to delete'
+              _reactBootstrap.FormGroup,
+              { controlId: 'formControlsSelect' },
+              _react2.default.createElement(
+                _reactBootstrap.ControlLabel,
+                null,
+                'Select a book id to delete'
+              ),
+              _react2.default.createElement(
+                _reactBootstrap.FormControl,
+                { ref: 'bookForDelete', componentClass: 'select', placeholder: 'select' },
+                _react2.default.createElement(
+                  'option',
+                  { value: 'select' },
+                  'select'
+                ),
+                booksList
+              )
             ),
             _react2.default.createElement(
-              _reactBootstrap.FormControl,
-              { ref: 'bookForDelete', componentClass: 'select', placeholder: 'select' },
-              _react2.default.createElement(
-                'option',
-                { value: 'select' },
-                'select'
-              ),
-              booksList
+              _reactBootstrap.Button,
+              {
+                onClick: this.onDelete.bind(this), bsStyle: 'danger' },
+              'Delete Book'
             )
-          ),
-          _react2.default.createElement(
-            _reactBootstrap.Button,
-            {
-              onClick: this.onDelete.bind(this), bsStyle: 'danger' },
-            'Delete Book'
           )
         )
       );
@@ -12640,80 +12648,84 @@ var Cart = function (_React$Component) {
           _reactBootstrap.Panel,
           { key: item._id },
           _react2.default.createElement(
-            _reactBootstrap.Row,
+            _reactBootstrap.Panel.Body,
             null,
             _react2.default.createElement(
-              _reactBootstrap.Col,
-              { xs: 12, sm: 4 },
+              _reactBootstrap.Row,
+              null,
               _react2.default.createElement(
-                'h6',
-                null,
-                item.title
-              ),
-              _react2.default.createElement(
-                'span',
-                null,
-                '    '
-              )
-            ),
-            _react2.default.createElement(
-              _reactBootstrap.Col,
-              { xs: 12, sm: 2 },
-              _react2.default.createElement(
-                'h6',
-                null,
-                '$',
-                item.price
-              )
-            ),
-            _react2.default.createElement(
-              _reactBootstrap.Col,
-              { xs: 12, sm: 2 },
-              _react2.default.createElement(
-                'h6',
-                null,
-                'Qty ',
+                _reactBootstrap.Col,
+                { xs: 12, sm: 4 },
                 _react2.default.createElement(
-                  _reactBootstrap.Label,
-                  { bsStyle: 'primary' },
-                  item.quantity
-                )
-              )
-            ),
-            _react2.default.createElement(
-              _reactBootstrap.Col,
-              { xs: 6, sm: 4 },
-              _react2.default.createElement(
-                _reactBootstrap.ButtonGroup,
-                { style: { minWidth: '300px' } },
-                _react2.default.createElement(
-                  _reactBootstrap.Button,
-                  {
-                    onClick: _this2.onDecrement.bind(_this2, item._id, item.quantity),
-                    bsStyle: 'default',
-                    bsSize: 'small' },
-                  '-'
-                ),
-                _react2.default.createElement(
-                  _reactBootstrap.Button,
-                  {
-                    onClick: _this2.onIncrement.bind(_this2, item._id),
-                    bsStyle: 'default',
-                    bsSize: 'small' },
-                  '+'
+                  'h6',
+                  null,
+                  item.title
                 ),
                 _react2.default.createElement(
                   'span',
                   null,
-                  '     '
-                ),
+                  '    '
+                )
+              ),
+              _react2.default.createElement(
+                _reactBootstrap.Col,
+                { xs: 12, sm: 2 },
                 _react2.default.createElement(
-                  _reactBootstrap.Button,
-                  {
-                    onClick: _this2.onDelete.bind(_this2, item._id),
-                    bsStyle: 'danger',
-                    bsSize: 'small' },
-                  'Delete'
+                  'h6',
+                  null,
+                  '$',
+                  item.price
+                )
+              ),
+              _react2.default.createElement(
+                _reactBootstrap.Col,
+                { xs: 12, sm: 2 },
+                _react2.default.createElement(
+                  'h6',
+                  null,
+                  'Qty ',
+                  _react2.default.createElement(
+                    _reactBootstrap.Label,
+                    { bsStyle: 'primary' },
+                    item.quantity
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                _reactBootstrap.Col,
+                { xs: 6, sm: 4 },
+                _react2.default.createElement(
+                  _reactBootstrap.ButtonGroup,
+                  { style: { minWidth: '300px' } },
+                  _react2.default.createElement(
+                    _reactBootstrap.Button,
+                    {
+                      onClick: _this2.onDecrement.bind(_this2, item._id, item.quantity),
+                      bsStyle: 'default',
+                      bsSize: 'small' },
+                    '-'
+                  ),
+                  _react2.default.createElement(
+                    _reactBootstrap.Button,
+                    {
+                      onClick: _this2.onIncrement.bind(_this2, item._id),
+                      bsStyle: 'default',
+                      bsSize: 'small' },
+                    '+'
+                  ),
+                  _react2.default.createElement(
+                    'span',
+                    null,
+                    '     '
+                  ),
+                  _react2.default.createElement(
+                    _reactBootstrap.Button,
+                    {
+                      onClick: _this2.onDelete.bind(_this2, item._id),
+                      bsStyle: 'danger',
+                      bsSize: 'small' },
+                    'Delete'
+                  )
                 )
               )
             )
@@ -12732,64 +12744,68 @@ var Cart = function (_React$Component) {
             'Cart'
           )
         ),
-        shoppingCartList,
         _react2.default.createElement(
-          _reactBootstrap.Row,
+          _reactBootstrap.Panel.Body,
           null,
+          shoppingCartList,
           _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 12 },
-            _react2.default.createElement(
-              'h6',
-              null,
-              'Total amount: ',
-              this.props.totalAmount
-            ),
-            _react2.default.createElement(
-              _reactBootstrap.Button,
-              { onClick: this.open.bind(this), bsStyle: 'success', bsSize: 'small' },
-              'Send order'
-            )
-          )
-        ),
-        _react2.default.createElement(
-          _reactBootstrap.Modal,
-          { show: this.state.showModal, onHide: this.close.bind(this) },
-          _react2.default.createElement(
-            _reactBootstrap.Modal.Header,
-            { closeButton: true },
-            _react2.default.createElement(
-              _reactBootstrap.Modal.Title,
-              null,
-              'Order sent'
-            )
-          ),
-          _react2.default.createElement(
-            _reactBootstrap.Modal.Body,
-            null,
-            _react2.default.createElement(
-              'h6',
-              null,
-              'Thank you for your purchase'
-            )
-          ),
-          _react2.default.createElement(
-            _reactBootstrap.Modal.Footer,
+            _reactBootstrap.Row,
             null,
             _react2.default.createElement(
               _reactBootstrap.Col,
-              { xs: 6 },
+              { xs: 12 },
               _react2.default.createElement(
                 'h6',
                 null,
-                'Total $: ',
+                'Total amount: ',
                 this.props.totalAmount
+              ),
+              _react2.default.createElement(
+                _reactBootstrap.Button,
+                { onClick: this.open.bind(this), bsStyle: 'success', bsSize: 'small' },
+                'Send order'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            _reactBootstrap.Modal,
+            { show: this.state.showModal, onHide: this.close.bind(this) },
+            _react2.default.createElement(
+              _reactBootstrap.Modal.Header,
+              { closeButton: true },
+              _react2.default.createElement(
+                _reactBootstrap.Modal.Title,
+                null,
+                'Order sent'
               )
             ),
             _react2.default.createElement(
-              _reactBootstrap.Button,
-              { onClick: this.close.bind(this) },
-              'Close'
+              _reactBootstrap.Modal.Body,
+              null,
+              _react2.default.createElement(
+                'h6',
+                null,
+                'Thank you for your purchase'
+              )
+            ),
+            _react2.default.createElement(
+              _reactBootstrap.Modal.Footer,
+              null,
+              _react2.default.createElement(
+                _reactBootstrap.Col,
+                { xs: 6 },
+                _react2.default.createElement(
+                  'h6',
+                  null,
+                  'Total $: ',
+                  this.props.totalAmount
+                )
+              ),
+              _react2.default.createElement(
+                _reactBootstrap.Button,
+                { onClick: this.close.bind(this) },
+                'Close'
+              )
             )
           )
         )

@@ -39,39 +39,43 @@ class BooksForm extends React.Component {
     return (
       <Well>
         <Panel>
-          <FormGroup controlId="title">
-            <ControlLabel>Title</ControlLabel>
-            <FormControl
-              type="text"
-              placeholder="Title"
-              ref="title"
-            />
-          </FormGroup>
-          <FormGroup controlId="price">
-            <ControlLabel>Price</ControlLabel>
-            <FormControl
-              type="text"
-              placeholder="Price"
-              ref="price"
-            />
-          </FormGroup>
-          <Button
-            onClick={(!this.props.msg) ? (this.handleSubmit.bind(this)) : (this.resetForm.bind(this))}
-            bsStyle={(!this.props.style) ? ('success') : (this.props.style)}
-          >{(!this.props.msg) ? ('Save book') : (this.props.msg)}
-          </Button>
+          <Panel.Body>
+            <FormGroup controlId="title">
+              <ControlLabel>Title</ControlLabel>
+              <FormControl
+                type="text"
+                placeholder="Title"
+                ref="title"
+              />
+            </FormGroup>
+            <FormGroup controlId="price">
+              <ControlLabel>Price</ControlLabel>
+              <FormControl
+                type="text"
+                placeholder="Price"
+                ref="price"
+              />
+            </FormGroup>
+            <Button
+              onClick={(!this.props.msg) ? (this.handleSubmit.bind(this)) : (this.resetForm.bind(this))}
+              bsStyle={(!this.props.style) ? ('success') : (this.props.style)}
+            >{(!this.props.msg) ? ('Save book') : (this.props.msg)}
+            </Button>
+          </Panel.Body>
         </Panel>
         <Panel style={{ marginTop: '25px' }}>
-          <FormGroup controlId="formControlsSelect">
-            <ControlLabel>Select a book id to delete</ControlLabel>
-            <FormControl ref="bookForDelete" componentClass="select" placeholder="select">
-              <option value="select">select</option>
-              {booksList}
-            </FormControl>
-          </FormGroup>
-          <Button
-            onClick={this.onDelete.bind(this)} bsStyle="danger">Delete Book
-          </Button>
+          <Panel.Body>
+            <FormGroup controlId="formControlsSelect">
+              <ControlLabel>Select a book id to delete</ControlLabel>
+              <FormControl ref="bookForDelete" componentClass="select" placeholder="select">
+                <option value="select">select</option>
+                {booksList}
+              </FormControl>
+            </FormGroup>
+            <Button
+              onClick={this.onDelete.bind(this)} bsStyle="danger">Delete Book
+            </Button>
+          </Panel.Body>
         </Panel>
       </Well>
     );

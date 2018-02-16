@@ -46,37 +46,39 @@ class Cart extends React.Component {
     const shoppingCartList = this.props.cart.map(item => {
       return (
         <Panel key={item._id}>
-          <Row>
-            <Col xs={12} sm={4}>
-              <h6>{item.title}</h6><span>    </span>
-            </Col>
-            <Col xs={12} sm={2}>
-              <h6>${item.price}</h6>
-            </Col>
-            <Col xs={12} sm={2}>
-              <h6>Qty <Label bsStyle="primary">{item.quantity}</Label></h6>
-            </Col>
-            <Col xs={6} sm={4}>
-              <ButtonGroup style={{minWidth: '300px'}}>
-                <Button
-                  onClick={this.onDecrement.bind(this, item._id, item.quantity)}
-                  bsStyle="default"
-                  bsSize="small">-
-                </Button>
-                <Button
-                  onClick={this.onIncrement.bind(this, item._id)}
-                  bsStyle="default"
-                  bsSize="small">+
-                </Button>
-                <span>     </span>
-                <Button
-                  onClick={this.onDelete.bind(this, item._id)}
-                  bsStyle="danger"
-                  bsSize="small">Delete
-                </Button>
-              </ButtonGroup>
-            </Col>
-          </Row>
+          <Panel.Body>
+            <Row>
+              <Col xs={12} sm={4}>
+                <h6>{item.title}</h6><span>    </span>
+              </Col>
+              <Col xs={12} sm={2}>
+                <h6>${item.price}</h6>
+              </Col>
+              <Col xs={12} sm={2}>
+                <h6>Qty <Label bsStyle="primary">{item.quantity}</Label></h6>
+              </Col>
+              <Col xs={6} sm={4}>
+                <ButtonGroup style={{minWidth: '300px'}}>
+                  <Button
+                    onClick={this.onDecrement.bind(this, item._id, item.quantity)}
+                    bsStyle="default"
+                    bsSize="small">-
+                  </Button>
+                  <Button
+                    onClick={this.onIncrement.bind(this, item._id)}
+                    bsStyle="default"
+                    bsSize="small">+
+                  </Button>
+                  <span>     </span>
+                  <Button
+                    onClick={this.onDelete.bind(this, item._id)}
+                    bsStyle="danger"
+                    bsSize="small">Delete
+                  </Button>
+                </ButtonGroup>
+              </Col>
+            </Row>
+          </Panel.Body>
         </Panel>
       )
     });
@@ -85,29 +87,31 @@ class Cart extends React.Component {
         <Panel.Heading>
           <Panel.Title componentClass="h3">Cart</Panel.Title>
         </Panel.Heading>
-        {shoppingCartList}
-        <Row>
-          <Col xs={12}>
-            <h6>Total amount: {this.props.totalAmount}</h6>
-            <Button onClick={this.open.bind(this)} bsStyle="success" bsSize="small">
-              Send order
-            </Button>
-          </Col>
-        </Row>
-        <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Order sent</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <h6>Thank you for your purchase</h6>
-          </Modal.Body>
-          <Modal.Footer>
-            <Col xs={6}>
-              <h6>Total $: {this.props.totalAmount}</h6>
+        <Panel.Body>
+          {shoppingCartList}
+          <Row>
+            <Col xs={12}>
+              <h6>Total amount: {this.props.totalAmount}</h6>
+              <Button onClick={this.open.bind(this)} bsStyle="success" bsSize="small">
+                Send order
+              </Button>
             </Col>
-            <Button onClick={this.close.bind(this)}>Close</Button>
-          </Modal.Footer>
-        </Modal>
+          </Row>
+          <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Order sent</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <h6>Thank you for your purchase</h6>
+            </Modal.Body>
+            <Modal.Footer>
+              <Col xs={6}>
+                <h6>Total $: {this.props.totalAmount}</h6>
+              </Col>
+              <Button onClick={this.close.bind(this)}>Close</Button>
+            </Modal.Footer>
+          </Modal>
+        </Panel.Body>
       </Panel>
     );
   }
