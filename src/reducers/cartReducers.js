@@ -38,14 +38,11 @@ const cartReducers = (state = { cart: [] }, action) => {
       return cartAfterDelete;
     }
     case 'UPDATE_CART': {
-      const currentCart = [...state.cart];
-      const idxUpdate = currentCart.findIndex(book => book._id === action._id);
-      currentCart[idxUpdate].quantity += action.unit;
       const newState = {
         ...state,
-        cart: currentCart,
-        totalAmount: calcTotals(currentCart).amount,
-        totalQty: calcTotals(currentCart).qty,
+        cart: action.payload,
+        totalAmount: calcTotals(action.payload).amount,
+        totalQty: calcTotals(action.payload).qty,
       };
       return newState;
     }

@@ -8,11 +8,15 @@ const deleteFromCart = _id => ({
   _id,
 });
 
-const updateCart = (_id, unit) => ({
-  type: 'UPDATE_CART',
-  _id,
-  unit,
-});
+const updateCart = (_id, unit, cart) => {
+  const currentCart = cart;
+  const idxUpdate = currentCart.findIndex(book => book._id === _id);
+  currentCart[idxUpdate].quantity += unit;
+  return {
+    type: 'UPDATE_CART',
+    payload: currentCart,
+  };
+};
 
 module.exports = {
   addToCart,

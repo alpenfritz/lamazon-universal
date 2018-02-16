@@ -3967,11 +3967,15 @@ var deleteFromCart = function deleteFromCart(_id) {
   };
 };
 
-var updateCart = function updateCart(_id, unit) {
+var updateCart = function updateCart(_id, unit, cart) {
+  var currentCart = cart;
+  var idxUpdate = currentCart.findIndex(function (book) {
+    return book._id === _id;
+  });
+  currentCart[idxUpdate].quantity += unit;
   return {
     type: 'UPDATE_CART',
-    _id: _id,
-    unit: unit
+    payload: currentCart
   };
 };
 
@@ -12474,13 +12478,13 @@ var Cart = function (_React$Component) {
   }, {
     key: 'onIncrement',
     value: function onIncrement(_id) {
-      this.props.updateCart(_id, 1);
+      this.props.updateCart(_id, 1, this.props.cart);
     }
   }, {
     key: 'onDecrement',
     value: function onDecrement(_id, quantity) {
       if (quantity > 1) {
-        this.props.updateCart(_id, -1);
+        this.props.updateCart(_id, -1, this.props.cart);
       }
     }
   }, {
@@ -12750,15 +12754,15 @@ var _index2 = _interopRequireDefault(_index);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // REDUX
-// const middleware = applyMiddleware(thunk, logger);
 
 
 // REDUX
 
 
 // REACT
-var middleware = (0, _redux.applyMiddleware)(_reduxThunk2.default); // REACT-ROUTER
-
+var middleware = (0, _redux.applyMiddleware)(_reduxThunk2.default, _reduxLogger2.default);
+// const middleware = applyMiddleware(thunk);
+// REACT-ROUTER
 var store = (0, _redux.createStore)(_index2.default, middleware);
 
 // REACT-ROUTER
@@ -47326,7 +47330,7 @@ var BookItem = function (_React$Component) {
           this.props.addToCart(book);
         } else {
           // update quantity
-          this.props.updateCart(_id, 1);
+          this.props.updateCart(_id, 1, this.props.cart);
         }
       } else {
         // empty cart
@@ -47755,15 +47759,10 @@ var cartReducers = function cartReducers() {
       }
     case 'UPDATE_CART':
       {
-        var currentCart = [].concat(_toConsumableArray(state.cart));
-        var idxUpdate = currentCart.findIndex(function (book) {
-          return book._id === action._id;
-        });
-        currentCart[idxUpdate].quantity += action.unit;
         var _newState = _extends({}, state, {
-          cart: currentCart,
-          totalAmount: calcTotals(currentCart).amount,
-          totalQty: calcTotals(currentCart).qty
+          cart: action.payload,
+          totalAmount: calcTotals(action.payload).amount,
+          totalQty: calcTotals(action.payload).qty
         });
         return _newState;
       }
