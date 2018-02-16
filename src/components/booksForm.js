@@ -3,9 +3,13 @@ import { Panel, FormControl, FormGroup, ControlLabel, Button, Well } from 'react
 import { connect } from 'react-redux';
 import { findDOMNode } from 'react-dom';
 import { bindActionCreators } from 'redux';
-import { postBook, deleteBook } from '../actions/booksActions';
+import { getBooks, postBook, deleteBook } from '../actions/booksActions';
 
 class BooksForm extends React.Component {
+  componentDidMount() {
+    this.props.getBooks();
+  }
+
   handleSubmit() {
     const book = [{
       title: findDOMNode(this.refs.title).value,
@@ -71,6 +75,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  getBooks,
   postBook,
   deleteBook,
 }, dispatch);

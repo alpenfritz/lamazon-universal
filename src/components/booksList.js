@@ -14,7 +14,7 @@ class BooksList extends React.Component {
   }
   render() {
     // console.log(this.props);
-    const list = this.props.books.map(book => (
+    const booksList = this.props.books.map(book => (
       <Col xs={12} sm={6} md={4} key={book._id}>
         <BookItem
           _id={book._id}
@@ -29,10 +29,7 @@ class BooksList extends React.Component {
           <Cart />
         </Row>
         <Row>
-          <Col xs={12} sm={6}>
-            <BooksForm />
-          </Col>
-          {list}
+          {booksList}
         </Row>
       </Grid>
     );

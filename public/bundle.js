@@ -12347,6 +12347,11 @@ var BooksForm = function (_React$Component) {
   }
 
   _createClass(BooksForm, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.getBooks();
+    }
+  }, {
     key: 'handleSubmit',
     value: function handleSubmit() {
       var book = [{
@@ -12459,6 +12464,7 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return (0, _redux.bindActionCreators)({
+    getBooks: _booksActions.getBooks,
     postBook: _booksActions.postBook,
     deleteBook: _booksActions.deleteBook
   }, dispatch);
@@ -34921,7 +34927,7 @@ var BooksList = function (_React$Component) {
     key: 'render',
     value: function render() {
       // console.log(this.props);
-      var list = this.props.books.map(function (book) {
+      var booksList = this.props.books.map(function (book) {
         return _react2.default.createElement(
           _reactBootstrap.Col,
           { xs: 12, sm: 6, md: 4, key: book._id },
@@ -34943,12 +34949,7 @@ var BooksList = function (_React$Component) {
         _react2.default.createElement(
           _reactBootstrap.Row,
           null,
-          _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 12, sm: 6 },
-            _react2.default.createElement(_booksForm2.default, null)
-          ),
-          list
+          booksList
         )
       );
     }
