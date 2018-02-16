@@ -1,4 +1,5 @@
 import React from 'react';
+import { LinkContainer } from 'react-router-bootstrap';
 import { Nav, NavItem, Navbar, Badge } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -18,17 +19,25 @@ class Menu extends React.Component {
 
         <Navbar.Collapse>
           <Nav>
-            <NavItem eventKey={1} href="#">About</NavItem>
-            <NavItem eventKey={2} href="#">Contact Us</NavItem>
+            <LinkContainer to="#">
+              <NavItem eventKey={1}>About</NavItem>
+            </LinkContainer>
+            <LinkContainer to="#">
+              <NavItem eventKey={2}>Contact Us</NavItem>
+            </LinkContainer>
           </Nav>
           <Nav pullRight>
-            <NavItem eventKey={1} href="/admin">Admin</NavItem>
-            <NavItem eventKey={2} href="/cart">Your Cart
-              {(this.props.totalQty > 0) ?
-                (<Badge className="badge">{this.props.totalQty}</Badge>) :
-                ('')
-              }
-            </NavItem>
+            <LinkContainer to="/admin">
+              <NavItem eventKey={1}>Admin</NavItem>
+            </LinkContainer>
+            <LinkContainer to="/cart">
+              <NavItem eventKey={2}>Your Cart
+                {(this.props.totalQty > 0) ?
+                  (<Badge className="badge">{this.props.totalQty}</Badge>) :
+                  ('')
+                }
+              </NavItem>
+            </LinkContainer>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
