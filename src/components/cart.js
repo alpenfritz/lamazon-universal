@@ -12,17 +12,17 @@ class Cart extends React.Component {
     };
   }
 
-  onDelete(id) {
-    this.props.deleteFromCart(id);
+  onDelete(_id) {
+    this.props.deleteFromCart(_id);
   }
 
-  onIncrement(id) {
-    this.props.updateCart(id, 1);
+  onIncrement(_id) {
+    this.props.updateCart(_id, 1);
   }
 
-  onDecrement(id, quantity) {
+  onDecrement(_id, quantity) {
     if (quantity > 1) {
-      this.props.updateCart(id, -1);
+      this.props.updateCart(_id, -1);
     }
   }
 
@@ -41,7 +41,7 @@ class Cart extends React.Component {
   renderShoppingCart() {
     const shoppingCartList = this.props.cart.map(item => {
       return (
-        <Panel key={item.id}>
+        <Panel key={item._id}>
           <Row>
             <Col xs={12} sm={4}>
               <h6>{item.title}</h6><span>    </span>
@@ -55,18 +55,18 @@ class Cart extends React.Component {
             <Col xs={6} sm={4}>
               <ButtonGroup style={{minWidth: '300px'}}>
                 <Button
-                  onClick={this.onDecrement.bind(this, item.id, item.quantity)}
+                  onClick={this.onDecrement.bind(this, item._id, item.quantity)}
                   bsStyle="default"
                   bsSize="small">-
                 </Button>
                 <Button
-                  onClick={this.onIncrement.bind(this, item.id)}
+                  onClick={this.onIncrement.bind(this, item._id)}
                   bsStyle="default"
                   bsSize="small">+
                 </Button>
                 <span>     </span>
                 <Button
-                  onClick={this.onDelete.bind(this, item.id)}
+                  onClick={this.onDelete.bind(this, item._id)}
                   bsStyle="danger"
                   bsSize="small">Delete
                 </Button>

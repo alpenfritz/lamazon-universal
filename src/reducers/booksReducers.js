@@ -1,11 +1,11 @@
 const defaultState = [
   {
-    id: 1,
+    _id: 1,
     title: 'First Book',
     price: 11,
   },
   {
-    id: 2,
+    _id: 2,
     title: 'Second Book',
     price: 22,
   },
@@ -27,9 +27,8 @@ const booksReducers = (state = { books: defaultState }, action) => {
       return newState;
     }
     case 'DELETE_BOOK': {
-      console.log(typeof action.id, '<------------------');
       const allBooks = [...state.books];
-      const idxDelete = allBooks.findIndex(book => book.id === +action.id);
+      const idxDelete = allBooks.findIndex(book => book._id === +action._id);
       const newState = {
         books: [
           ...allBooks.slice(0, idxDelete),
@@ -40,7 +39,7 @@ const booksReducers = (state = { books: defaultState }, action) => {
     }
     case 'UPDATE_BOOK': {
       const allBooks = [...state.books];
-      const idxUpdate = allBooks.findIndex(book => book.id === action.payload.id);
+      const idxUpdate = allBooks.findIndex(book => book._id === action.payload._id);
       allBooks[idxUpdate] = action.payload;
       const newState = { books: allBooks };
       return newState;

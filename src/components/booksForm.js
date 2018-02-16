@@ -21,7 +21,7 @@ class BooksForm extends React.Component {
 
   render() {
     const booksList = this.props.books.map(book => (
-      <option key={book.id}>{book.id}</option>
+      <option key={book._id}>{book._id}</option>
     ));
 
     return (

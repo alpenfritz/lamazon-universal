@@ -3,14 +3,14 @@ const addToCart = book => ({
   payload: book,
 });
 
-const deleteFromCart = id => ({
+const deleteFromCart = _id => ({
   type: 'DELETE_FROM_CART',
-  id,
+  _id,
 });
 
-const updateCart = (id, unit) => ({
+const updateCart = (_id, unit) => ({
   type: 'UPDATE_CART',
-  id,
+  _id,
   unit,
 });
 

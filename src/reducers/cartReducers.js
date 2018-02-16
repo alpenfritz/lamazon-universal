@@ -25,7 +25,7 @@ const cartReducers = (state = { cart: [] }, action) => {
     }
     case 'DELETE_FROM_CART': {
       const cartBeforeDelete = [...state.cart];
-      const idxDelete = cartBeforeDelete.findIndex(book => book.id === action.id);
+      const idxDelete = cartBeforeDelete.findIndex(book => book._id === action._id);
       const payloadAfterDelete = [
         ...cartBeforeDelete.slice(0, idxDelete),
         ...cartBeforeDelete.slice(idxDelete + 1),
@@ -39,7 +39,7 @@ const cartReducers = (state = { cart: [] }, action) => {
     }
     case 'UPDATE_CART': {
       const currentCart = [...state.cart];
-      const idxUpdate = currentCart.findIndex(book => book.id === action.id);
+      const idxUpdate = currentCart.findIndex(book => book._id === action._id);
       currentCart[idxUpdate].quantity += action.unit;
       const newState = {
         ...state,

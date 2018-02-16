@@ -9,19 +9,19 @@ class BookItem extends React.Component {
     const book = [
       ...this.props.cart,
       {
-        id: this.props.id,
+        _id: this.props._id,
         title: this.props.title,
         price: this.props.price,
         quantity: 1,
       },
     ];
     if (this.props.cart.length > 0) {
-      const id = this.props.id;
-      const idxCartItem = this.props.cart.findIndex(item => id === item.id);
+      const _id = this.props._id;
+      const idxCartItem = this.props.cart.findIndex(item => _id === item._id);
       if (idxCartItem === -1) { // add to cart
         this.props.addToCart(book);
       } else { // update quantity
-        this.props.updateCart(id, 1);
+        this.props.updateCart(_id, 1);
       }
     } else { // empty cart
       this.props.addToCart(book);
