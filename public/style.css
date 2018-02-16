@@ -16,3 +16,8 @@ body {
 .badge {
   background-color: orange;
 }
+
+.slider-header {
+  color: white;
+  font-stretch: expanded;
+}

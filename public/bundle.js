@@ -34955,6 +34955,56 @@ var BooksList = function (_React$Component) {
         _react2.default.createElement(
           _reactBootstrap.Row,
           null,
+          _react2.default.createElement(
+            _reactBootstrap.Carousel,
+            null,
+            _react2.default.createElement(
+              _reactBootstrap.Carousel.Item,
+              null,
+              _react2.default.createElement('img', { width: 900, height: 300, alt: '900x300', src: '/images/slider1.jpg' }),
+              _react2.default.createElement(
+                _reactBootstrap.Carousel.Caption,
+                null,
+                _react2.default.createElement(
+                  'h1',
+                  { className: 'slider-header' },
+                  'Phasellus congue elementum libero a auctor.'
+                )
+              )
+            ),
+            _react2.default.createElement(
+              _reactBootstrap.Carousel.Item,
+              null,
+              _react2.default.createElement('img', { width: 900, height: 300, alt: '900x300', src: '/images/slider2.jpg' }),
+              _react2.default.createElement(
+                _reactBootstrap.Carousel.Caption,
+                null,
+                _react2.default.createElement(
+                  'h1',
+                  { className: 'slider-header' },
+                  'Morbi ex magna, tincidunt fringilla fringilla at, hendrerit id nisl.'
+                )
+              )
+            ),
+            _react2.default.createElement(
+              _reactBootstrap.Carousel.Item,
+              null,
+              _react2.default.createElement('img', { width: 900, height: 300, alt: '900x300', src: '/images/slider3.jpg' }),
+              _react2.default.createElement(
+                _reactBootstrap.Carousel.Caption,
+                null,
+                _react2.default.createElement(
+                  'h1',
+                  { className: 'slider-header' },
+                  'Vivamus urna massa, tempus quis consequat efficitur, facilisis sed metus.'
+                )
+              )
+            )
+          )
+        ),
+        _react2.default.createElement(
+          _reactBootstrap.Row,
+          { style: { marginTop: '15px' } },
           _react2.default.createElement(_cart2.default, null)
         ),
         _react2.default.createElement(
