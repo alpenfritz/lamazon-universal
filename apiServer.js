@@ -47,7 +47,7 @@ app.post('/cart', (request, response) => {
   request.session.cart = cart;
   request.session.save((err) => {
     if (err) {
-      throw err;
+      console.log('# API POST SESSION', err);
     }
     return response.json(request.session.cart);
   });
@@ -58,7 +58,7 @@ app.get('/books', (request, response) => {
   // mongoose
   Books.find((err, books) => {
     if (err) {
-      throw err;
+      console.log('# API GET BOOKS', err);
     }
     return response.json(books);
   });
@@ -71,7 +71,7 @@ app.post('/books', (request, response) => {
   // mongoose
   Books.create(book, (err, books) => {
     if (err) {
-      throw err;
+      console.log('# API POST BOOKS', err);
     }
     return response.json(books);
   });
@@ -84,7 +84,7 @@ app.delete('/books/:_id', (request, response) => {
   // mongoose
   Books.remove(query, (err, books) => {
     if (err) {
-      throw err;
+      console.log('# API DELETE BOOKS', err);
     }
     return response.json(books);
   });
@@ -108,7 +108,7 @@ app.put('/books/:_id', (request, response) => {
   // mongoose
   Books.findOneAndUpdate(query, update, options, (err, books) => {
     if (err) {
-      throw err;
+      console.log('# API UPDATE BOOKS', err);
     }
     return response.json(books);
   });
