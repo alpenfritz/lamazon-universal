@@ -1,20 +1,9 @@
-const defaultState = [
-  {
-    _id: 1,
-    title: 'First Book',
-    price: 11,
-  },
-  {
-    _id: 2,
-    title: 'Second Book',
-    price: 22,
-  },
-];
+const defaultState = [];
 
 const booksReducers = (state = { books: defaultState }, action) => {
   switch (action.type) {
     case 'GET_BOOKS': {
-      const newState = { ...state, books: [...state.books] };
+      const newState = { ...state, books: [...action.payload] };
       return newState;
     }
     case 'POST_BOOK': {
@@ -28,7 +17,7 @@ const booksReducers = (state = { books: defaultState }, action) => {
     }
     case 'DELETE_BOOK': {
       const allBooks = [...state.books];
-      const idxDelete = allBooks.findIndex(book => book._id === +action._id);
+      const idxDelete = allBooks.findIndex(book => book._id === action.payload);
       const newState = {
         books: [
           ...allBooks.slice(0, idxDelete),

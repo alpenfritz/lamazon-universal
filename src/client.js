@@ -21,7 +21,8 @@ import { addToCart } from './actions/cartActions';
 import rootReducer from './reducers/index';
 
 // REDUX
-const middleware = applyMiddleware(thunk, logger);
+// const middleware = applyMiddleware(thunk, logger);
+const middleware = applyMiddleware(thunk);
 const store = createStore(rootReducer, middleware);
 
 // REACT-ROUTER

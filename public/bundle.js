@@ -6133,9 +6133,16 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// const getBooks = () => ({
+//   type: 'GET_BOOKS',
+// });
 var getBooks = function getBooks() {
-  return {
-    type: 'GET_BOOKS'
+  return function (dispatch) {
+    _axios2.default.get('/api/books').then(function (response) {
+      dispatch({ type: 'GET_BOOKS', payload: response.data });
+    }).catch(function (err) {
+      dispatch({ type: 'GET_BOOKS_REJECTED', payload: err });
+    });
   };
 };
 
@@ -6148,15 +6155,22 @@ var postBook = function postBook(books) {
     _axios2.default.post('/api/books', books).then(function (response) {
       dispatch({ type: 'POST_BOOK', payload: response.data });
     }).catch(function (err) {
-      dispatch({ type: 'POST_BOOK_REJECTED', payload: 'POST error' });
+      dispatch({ type: 'POST_BOOK_REJECTED', payload: err });
     });
   };
 };
 
+// const deleteBook = _id => ({
+//   type: 'DELETE_BOOK',
+//   _id,
+// });
 var deleteBook = function deleteBook(_id) {
-  return {
-    type: 'DELETE_BOOK',
-    _id: _id
+  return function (dispatch) {
+    _axios2.default.delete('/api/books/' + _id).then(function (response) {
+      dispatch({ type: 'DELETE_BOOK', payload: _id });
+    }).catch(function (err) {
+      dispatch({ type: 'DELETE_BOOK_REJECTED', payload: err });
+    });
   };
 };
 
@@ -12736,13 +12750,14 @@ var _index2 = _interopRequireDefault(_index);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // REDUX
+// const middleware = applyMiddleware(thunk, logger);
 
 
 // REDUX
 
 
 // REACT
-var middleware = (0, _redux.applyMiddleware)(_reduxThunk2.default, _reduxLogger2.default); // REACT-ROUTER
+var middleware = (0, _redux.applyMiddleware)(_reduxThunk2.default); // REACT-ROUTER
 
 var store = (0, _redux.createStore)(_index2.default, middleware);
 
@@ -47630,15 +47645,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-var defaultState = [{
-  _id: 1,
-  title: 'First Book',
-  price: 11
-}, {
-  _id: 2,
-  title: 'Second Book',
-  price: 22
-}];
+var defaultState = [];
 
 var booksReducers = function booksReducers() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { books: defaultState };
@@ -47647,7 +47654,7 @@ var booksReducers = function booksReducers() {
   switch (action.type) {
     case 'GET_BOOKS':
       {
-        var newState = _extends({}, state, { books: [].concat(_toConsumableArray(state.books)) });
+        var newState = _extends({}, state, { books: [].concat(_toConsumableArray(action.payload)) });
         return newState;
       }
     case 'POST_BOOK':
@@ -47661,7 +47668,7 @@ var booksReducers = function booksReducers() {
       {
         var allBooks = [].concat(_toConsumableArray(state.books));
         var idxDelete = allBooks.findIndex(function (book) {
-          return book._id === +action._id;
+          return book._id === action.payload;
         });
         var _newState2 = {
           books: [].concat(_toConsumableArray(allBooks.slice(0, idxDelete)), _toConsumableArray(allBooks.slice(idxDelete + 1)))
