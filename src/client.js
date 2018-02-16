@@ -15,13 +15,14 @@ import Footer from './components/footer';
 // REDUX
 import { applyMiddleware, createStore } from 'redux';
 import logger from 'redux-logger';
+import thunk from 'redux-thunk';
 import { postBook, deleteBook, updateBook } from './actions/booksActions';
 import { addToCart } from './actions/cartActions';
 import rootReducer from './reducers/index';
 
 // REDUX
-const loggerMiddleware = applyMiddleware(logger);
-const store = createStore(rootReducer, loggerMiddleware);
+const middleware = applyMiddleware(thunk, logger);
+const store = createStore(rootReducer, middleware);
 
 // REACT-ROUTER
 const Routes = (
