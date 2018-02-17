@@ -20,14 +20,15 @@ app.use(cookieParser());
 
 // API
 const Books = require('./db/books'); // DB Schema
-mongoose.connect('mongodb://localhost:27017/bookshop');
+mongoose.connect('mongodb://user:pw@ds239648.mlab.com:39648/bookshop');
+// mongoose.connect('mongodb://localhost:27017/bookshop');
 // optional:
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Connection Error to MongoDB'));
 
 // SESSION MIDDLEWARE (persistent ShoppingCart)
 app.use(session({
-  secret: 'maloKA',
+  secret: 'thisisnotmysecret',
   saveUninitialized: false, // don't create session until something stored
   resave: false, // don't save session if unmodified
   cookie: { maxAge: 2 * 24 * 60 * 60 * 1000 }, // 2 days in milliseconds
