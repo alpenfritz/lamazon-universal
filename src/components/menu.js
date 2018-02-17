@@ -19,10 +19,10 @@ class Menu extends React.Component {
 
         <Navbar.Collapse>
           <Nav>
-            <LinkContainer to="#">
+            <LinkContainer to="/about">
               <NavItem eventKey={1}>About</NavItem>
             </LinkContainer>
-            <LinkContainer to="#">
+            <LinkContainer to="/contact">
               <NavItem eventKey={2}>Contact Us</NavItem>
             </LinkContainer>
           </Nav>

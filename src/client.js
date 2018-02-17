@@ -1,43 +1,31 @@
 // REACT-ROUTER
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 // REACT
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 
-import BooksList from './components/booksList';
-import BooksForm from './components/booksForm';
-import Cart from './components/cart';
-import Menu from './components/menu';
-import Footer from './components/footer';
-
 // REDUX
 import { applyMiddleware, createStore } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
-import { postBook, deleteBook, updateBook } from './actions/booksActions';
-import { addToCart } from './actions/cartActions';
 import rootReducer from './reducers/index';
+
+// others
+import routes from './routes';
 
 // REDUX
 const middleware = applyMiddleware(thunk, logger);
+const initialState = window.INITIAL_STATE; // pass initial state from SERVER STORE
 // const middleware = applyMiddleware(thunk);
-const store = createStore(rootReducer, middleware);
+const store = createStore(rootReducer, initialState, middleware);
 
 // REACT-ROUTER
 const Routes = (
   <Provider store={store}>
     <BrowserRouter>
-      <div>
-        <Menu />
-        <Switch>
-          <Route exact path="/" component={BooksList} />
-          <Route path="/admin" component={BooksForm} />
-          <Route path="/cart" component={Cart} />
-        </Switch>
-        <Footer />
-      </div>
+      {routes}
     </BrowserRouter>
   </Provider>
 );
