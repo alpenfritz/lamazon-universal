@@ -6,7 +6,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "webpack && node ./bin/www | node apiServer.js",
+    "start": "node ./bin/www | node apiServer.js",
+    "start-local": "webpack && node ./bin/www | node apiServer.js",
     "nodemon": "nodemon ./bin/www | node apiServer.js",
     "eslint": "eslint .",
     "webpack": "webpack"
