@@ -4,6 +4,8 @@ This app was created during my time as a student at Code Chrysalis.
 
 It uses Node, React, Redux, Express, Mongodb and webpack.
 
+![screenshot-lamazonuniversal hmqtpfjzkh ap-northeast-1 elasticbeanstalk com-2018 03 30-13-31-50](https://user-images.githubusercontent.com/21099219/38124799-9f7c7b44-341f-11e8-9758-7c3d834f5f0a.png)
+
 ## Key Features
 
 * Bookstore with shopping cart functionality
